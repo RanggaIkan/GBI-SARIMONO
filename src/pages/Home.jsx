@@ -2,6 +2,51 @@ import { Link } from 'react-router-dom'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
+const JADWAL_IBADAH = [
+  {
+    nama: 'Ibadah Raya',
+    hari: 'Minggu',
+    jam: '07.00 WIB',
+    utama: true,
+  },
+  {
+    nama: 'Victory Kids',
+    hari: 'Minggu',
+    jam: '07.30 WIB',
+    utama: false,
+  },
+  {
+    nama: 'Usia Indah',
+    hari: 'Senin',
+    jam: '17.00 WIB',
+    utama: false,
+  },
+  {
+    nama: 'Wanita Bethel',
+    hari: 'Selasa',
+    jam: '18.00 WIB',
+    utama: false,
+  },
+  {
+    nama: 'Komsel Bethel',
+    hari: 'Rabu / Kamis',
+    jam: '18.00 WIB',
+    utama: false,
+  },
+  {
+    nama: 'Doa Malam',
+    hari: 'Jumat',
+    jam: '18.00 WIB',
+    utama: false,
+  },
+  {
+    nama: 'Victory Youth',
+    hari: 'Sabtu',
+    jam: '17.00 WIB',
+    utama: false,
+  },
+]
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
@@ -73,17 +118,45 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Worship Schedule (Jadwal Ibadah) */}
+        {/* Worship Schedule (Jadwal Ibadah - Clean Text Layout) */}
         <section className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8">
-          <h3 className="text-lg font-semibold text-slate-900 mb-4">
-            Jadwal Ibadah
-          </h3>
-          <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
-            <img
-              src="/jadwal-ibadah.jpeg"
-              alt="Jadwal Ibadah GBI Samirono"
-              className="w-full max-h-[520px] object-contain mx-auto"
-            />
+          <div className="mb-5">
+            <h3 className="text-lg font-semibold text-slate-900">
+              Jadwal Ibadah Sepekan
+            </h3>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Jadwal ibadah dan persekutuan rutin di GBI Samirono
+            </p>
+          </div>
+
+          <div className="divide-y divide-slate-200 border border-slate-200 rounded-xl overflow-hidden">
+            {JADWAL_IBADAH.map((item) => (
+              <div
+                key={item.nama}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-5 py-3.5 gap-1.5 ${
+                  item.utama ? 'bg-blue-50/70' : 'bg-white hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="font-semibold text-slate-900 text-sm sm:text-base">
+                    {item.nama}
+                  </span>
+                  {item.utama && (
+                    <span className="text-[11px] font-semibold uppercase tracking-wide bg-blue-600 text-white px-2 py-0.5 rounded-full">
+                      Utama
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="font-medium text-slate-700">{item.hari}</span>
+                  <span className="text-slate-300">&bull;</span>
+                  <span className="font-semibold text-slate-900 bg-slate-100 px-2.5 py-0.5 rounded-md text-xs sm:text-sm">
+                    {item.jam}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
