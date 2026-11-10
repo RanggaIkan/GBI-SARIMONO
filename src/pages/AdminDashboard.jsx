@@ -152,9 +152,9 @@ export default function AdminDashboard() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
-              src="/logo-gbi.jpeg"
+              src="/logo-gbi.png"
               alt="Logo GBI Samirono"
-              className="h-10 w-10 rounded-full object-cover border border-slate-200"
+              className="h-10 w-10 object-contain"
             />
             <div>
               <h1 className="text-lg font-bold text-slate-900 leading-tight">

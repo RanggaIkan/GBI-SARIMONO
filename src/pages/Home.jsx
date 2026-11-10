@@ -55,9 +55,9 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
-              src="/logo-gbi.jpeg"
+              src="/logo-gbi.png"
               alt="Logo GBI Samirono"
-              className="h-11 w-11 rounded-full object-cover border border-slate-200"
+              className="h-11 w-11 object-contain"
             />
             <div>
               <h1 className="text-lg font-bold text-slate-900 leading-tight">
@@ -80,16 +80,17 @@ export default function Home() {
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
         {/* Hero / Identity Card */}
         <section className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8 text-center">
-          <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="flex items-center justify-center gap-6 sm:gap-8 mb-6">
             <img
-              src="/logo-gbi.jpeg"
+              src="/logo-gbi.png"
               alt="Logo Gereja Bethel Indonesia"
-              className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-contain border border-slate-200 bg-white p-1"
+              className="h-24 w-24 sm:h-28 sm:w-28 object-contain"
             />
+            <div className="h-16 w-px bg-slate-200" aria-hidden="true" />
             <img
-              src="/logo-how.jpeg"
+              src="/logo-how.png"
               alt="Logo House of Worship"
-              className="h-20 sm:h-24 w-auto rounded-lg object-contain border border-slate-200 bg-white p-1"
+              className="h-24 w-24 sm:h-28 sm:w-28 object-contain"
             />
           </div>
 

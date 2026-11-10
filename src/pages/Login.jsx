@@ -43,9 +43,9 @@ export default function Login() {
       <div className="w-full max-w-md mx-auto bg-white rounded-xl border border-slate-200 p-6 sm:p-8">
         <div className="flex flex-col items-center text-center mb-6">
           <img
-            src="/logo-gbi.jpeg"
+            src="/logo-gbi.png"
             alt="Logo GBI Samirono"
-            className="h-14 w-14 rounded-full object-cover border border-slate-200 mb-3"
+            className="h-16 w-16 object-contain mb-3"
           />
           <h1 className="text-xl font-bold text-slate-900">Login Admin</h1>
           <p className="text-sm text-slate-500 mt-1">
