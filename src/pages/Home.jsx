@@ -110,9 +110,9 @@ export default function Home() {
               <li className="flex items-center justify-between py-1.5 border-b border-slate-100">
                 <span className="font-medium text-slate-500">Instagram (IG)</span>
                 <a
-                  href="https://www.instagram.com/"
+                  href="https://www.instagram.com/gbi.samirono"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-medium text-blue-600 hover:underline"
                 >
                   Gbi Samirono
@@ -121,9 +121,9 @@ export default function Home() {
               <li className="flex items-center justify-between py-1.5 border-b border-slate-100">
                 <span className="font-medium text-slate-500">YouTube (YT)</span>
                 <a
-                  href="https://www.youtube.com/"
+                  href="https://www.youtube.com/@gbisamirono"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-medium text-blue-600 hover:underline"
                 >
                   GBI Samirono - House of Worship
@@ -132,9 +132,9 @@ export default function Home() {
               <li className="flex items-center justify-between py-1.5">
                 <span className="font-medium text-slate-500">Facebook (FB)</span>
                 <a
-                  href="https://www.facebook.com/"
+                  href="https://www.facebook.com/gbi.samirono/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-medium text-blue-600 hover:underline"
                 >
                   Gbi Samirono
