@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 const CURRENT_YEAR = new Date().getFullYear()
 
 const JADWAL_IBADAH = [
@@ -52,7 +50,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
       {/* Header / Navbar */}
       <header className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center">
           <div className="flex items-center gap-3">
             <img
               src="/logo-gbi.png"
@@ -66,13 +64,6 @@ export default function Home() {
               <p className="text-xs text-slate-500">House of Worship</p>
             </div>
           </div>
-
-          <Link
-            to="/login"
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-md border border-slate-200 hover:bg-slate-100"
-          >
-            Admin Login
-          </Link>
         </div>
       </header>
 
