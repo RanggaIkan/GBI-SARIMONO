@@ -4,8 +4,33 @@ import { supabase } from '../supabaseClient'
 
 const emptyForm = {
   nama_lengkap: '',
+  tanggal_lahir: '',
   alamat: '',
   no_telp: '',
+  komsel: '',
+}
+
+const KOMSEL_OPTIONS = [
+  'Komsel Bethel',
+  'Victory Youth',
+  'Wanita Bethel',
+  'Usia Indah',
+  'Victory Kids',
+  'Umum',
+]
+
+function formatTanggalLahir(value) {
+  if (!value) return '-'
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const [year, month, day] = value.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  }
+  return value
 }
 
 export default function AdminDashboard() {
@@ -55,8 +80,10 @@ export default function AdminDashboard() {
 
     const payload = {
       nama_lengkap: formData.nama_lengkap.trim(),
+      tanggal_lahir: formData.tanggal_lahir.trim(),
       alamat: formData.alamat.trim(),
       no_telp: formData.no_telp.trim(),
+      komsel: formData.komsel.trim(),
     }
 
     if (editingId) {
@@ -103,8 +130,10 @@ export default function AdminDashboard() {
     setEditingId(item.id)
     setFormData({
       nama_lengkap: item.nama_lengkap || '',
+      tanggal_lahir: item.tanggal_lahir || '',
       alamat: item.alamat || '',
       no_telp: item.no_telp || '',
+      komsel: item.komsel || '',
     })
     setErrorMsg('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -149,7 +178,7 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-slate-50 text-slate-800">
       {/* Top Navigation Bar */}
       <header className="bg-white border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src="/logo-gbi.png"
@@ -181,10 +210,23 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
         {errorMsg && (
-          <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
-            <strong>Error:</strong> {errorMsg}
+          <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700 space-y-1">
+            <div>
+              <strong>Error:</strong> {errorMsg}
+            </div>
+            {(errorMsg.includes('tanggal_lahir') ||
+              errorMsg.includes('komsel')) && (
+              <p className="text-xs text-red-600">
+                Tip: Jalankan perintah{' '}
+                <code>
+                  ALTER TABLE public.jemaat ADD COLUMN IF NOT EXISTS
+                  tanggal_lahir TEXT, ADD COLUMN IF NOT EXISTS komsel TEXT;
+                </code>{' '}
+                di Supabase SQL Editor.
+              </p>
+            )}
           </div>
         )}
 
@@ -203,7 +245,7 @@ export default function AdminDashboard() {
 
           <form
             onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"
           >
             <div>
               <label
@@ -226,10 +268,28 @@ export default function AdminDashboard() {
 
             <div>
               <label
+                htmlFor="tanggal_lahir"
+                className="block text-xs font-medium text-slate-700 mb-1"
+              >
+                Tanggal Lahir
+              </label>
+              <input
+                id="tanggal_lahir"
+                name="tanggal_lahir"
+                type="date"
+                required
+                value={formData.tanggal_lahir}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label
                 htmlFor="alamat"
                 className="block text-xs font-medium text-slate-700 mb-1"
               >
-                Alamat
+                Alamat Tinggal
               </label>
               <input
                 id="alamat"
@@ -248,7 +308,7 @@ export default function AdminDashboard() {
                 htmlFor="no_telp"
                 className="block text-xs font-medium text-slate-700 mb-1"
               >
-                No. Telepon
+                No. HP / WhatsApp
               </label>
               <input
                 id="no_telp"
@@ -262,7 +322,32 @@ export default function AdminDashboard() {
               />
             </div>
 
-            <div className="md:col-span-3 flex items-center justify-end gap-2 pt-2">
+            <div>
+              <label
+                htmlFor="komsel"
+                className="block text-xs font-medium text-slate-700 mb-1"
+              >
+                Komsel / Kategorial
+              </label>
+              <input
+                id="komsel"
+                name="komsel"
+                type="text"
+                list="komsel-options"
+                required
+                value={formData.komsel}
+                onChange={handleChange}
+                placeholder="Pilih atau ketik komsel..."
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+              />
+              <datalist id="komsel-options">
+                {KOMSEL_OPTIONS.map((option) => (
+                  <option key={option} value={option} />
+                ))}
+              </datalist>
+            </div>
+
+            <div className="sm:col-span-2 lg:col-span-5 flex items-center justify-end gap-2 pt-2">
               {editingId && (
                 <button
                   type="button"
@@ -301,8 +386,10 @@ export default function AdminDashboard() {
                 <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   <th className="py-3 px-4 w-12">No</th>
                   <th className="py-3 px-4">Nama Lengkap</th>
-                  <th className="py-3 px-4">Alamat</th>
-                  <th className="py-3 px-4">No. Telepon</th>
+                  <th className="py-3 px-4">Tanggal Lahir</th>
+                  <th className="py-3 px-4">Alamat Tinggal</th>
+                  <th className="py-3 px-4">No. HP / WhatsApp</th>
+                  <th className="py-3 px-4">Komsel / Kategorial</th>
                   <th className="py-3 px-4 text-right">Aksi</th>
                 </tr>
               </thead>
@@ -310,7 +397,7 @@ export default function AdminDashboard() {
                 {loading ? (
                   <tr>
                     <td
-                      colSpan={5}
+                      colSpan={7}
                       className="py-8 text-center text-slate-500"
                     >
                       Memuat data jemaat...
@@ -319,7 +406,7 @@ export default function AdminDashboard() {
                 ) : jemaatList.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={5}
+                      colSpan={7}
                       className="py-8 text-center text-slate-500"
                     >
                       Belum ada data jemaat. Silakan tambahkan melalui formulir di atas.
@@ -341,11 +428,23 @@ export default function AdminDashboard() {
                       <td className="py-3 px-4 font-medium text-slate-900">
                         {item.nama_lengkap}
                       </td>
+                      <td className="py-3 px-4 text-slate-600 whitespace-nowrap">
+                        {formatTanggalLahir(item.tanggal_lahir)}
+                      </td>
                       <td className="py-3 px-4 text-slate-600">
                         {item.alamat}
                       </td>
-                      <td className="py-3 px-4 text-slate-600">
+                      <td className="py-3 px-4 text-slate-600 whitespace-nowrap">
                         {item.no_telp}
+                      </td>
+                      <td className="py-3 px-4 text-slate-600">
+                        {item.komsel ? (
+                          <span className="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 border border-blue-200">
+                            {item.komsel}
+                          </span>
+                        ) : (
+                          '-'
+                        )}
                       </td>
                       <td className="py-3 px-4 text-right space-x-2 whitespace-nowrap">
                         <button
