@@ -7,17 +7,10 @@ const emptyForm = {
   tanggal_lahir: '',
   alamat: '',
   no_telp: '',
-  komsel: '',
+  komsel: 'Komsel',
 }
 
-const KOMSEL_OPTIONS = [
-  'Komsel Bethel',
-  'Victory Youth',
-  'Wanita Bethel',
-  'Usia Indah',
-  'Victory Kids',
-  'Umum',
-]
+const KOMSEL_OPTIONS = ['Komsel', 'Kategorial']
 
 function formatTanggalLahir(value) {
   if (!value) return '-'
@@ -133,7 +126,7 @@ export default function AdminDashboard() {
       tanggal_lahir: item.tanggal_lahir || '',
       alamat: item.alamat || '',
       no_telp: item.no_telp || '',
-      komsel: item.komsel || '',
+      komsel: item.komsel || 'Komsel',
     })
     setErrorMsg('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -329,22 +322,20 @@ export default function AdminDashboard() {
               >
                 Komsel / Kategorial
               </label>
-              <input
+              <select
                 id="komsel"
                 name="komsel"
-                type="text"
-                list="komsel-options"
                 required
                 value={formData.komsel}
                 onChange={handleChange}
-                placeholder="Pilih atau ketik komsel..."
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
-              />
-              <datalist id="komsel-options">
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+              >
                 {KOMSEL_OPTIONS.map((option) => (
-                  <option key={option} value={option} />
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
                 ))}
-              </datalist>
+              </select>
             </div>
 
             <div className="sm:col-span-2 lg:col-span-5 flex items-center justify-end gap-2 pt-2">
