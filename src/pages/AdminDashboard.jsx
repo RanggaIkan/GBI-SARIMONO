@@ -7,7 +7,7 @@ const emptyJemaatForm = {
   tanggal_lahir: '',
   alamat: '',
   no_telp: '',
-  komsel: 'Komsel',
+  komsel: '',
 }
 
 const emptyInventarisForm = {
@@ -16,8 +16,6 @@ const emptyInventarisForm = {
   jumlah: '1',
   kondisi: 'Baik',
 }
-
-const KOMSEL_OPTIONS = ['Komsel', 'Kategorial']
 
 const KATEGORI_INVENTARIS_OPTIONS = [
   'Sound System',
@@ -174,7 +172,7 @@ export default function AdminDashboard() {
       tanggal_lahir: item.tanggal_lahir || '',
       alamat: item.alamat || '',
       no_telp: item.no_telp || '',
-      komsel: item.komsel || 'Komsel',
+      komsel: item.komsel || '',
     })
     setJemaatErrorMsg('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -468,20 +466,16 @@ export default function AdminDashboard() {
                 >
                   Komsel / Kategorial
                 </label>
-                <select
+                <input
                   id="komsel"
                   name="komsel"
+                  type="text"
                   required
                   value={jemaatForm.komsel}
                   onChange={handleJemaatChange}
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
-                >
-                  {KOMSEL_OPTIONS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Contoh: Komsel / Victory Youth"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+                />
               </div>
 
               <div className="sm:col-span-2 lg:col-span-5 flex items-center justify-end gap-2 pt-2">
